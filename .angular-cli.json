@@ -52,6 +52,15 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "component": {}
+    "component": {
+      "spec": false,
+      "inlineStyle": true,
+      "inlineTemplate": true,
+      "changeDetection": "OnPush",
+      "flat": true
+    },
+    "directive": {
+      "spec": false
+    }
   }
 }

@@ -3,13 +3,12 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'intel-root',
   template: `
-  <h1>
-    {{title}}
-  </h1>
-  <router-outlet></router-outlet>
+    <intel-main-nav></intel-main-nav>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
   `,
-  styles: []
 })
 export class AppComponent {
-  title = 'intel works!';
+
 }
