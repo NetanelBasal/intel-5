@@ -2,7 +2,8 @@ import { Alert } from '../models/alert.model';
 import * as alert from '../actions/alerts.actions';
 
 export interface State {
-  entities : Alert[]
+  entities : Alert[];
+  showAll : boolean;
   isFetching : boolean;
   error : string | null;
 }
@@ -10,17 +11,18 @@ export interface State {
 export const initialState : State = {
   entities: [],
   isFetching: false,
-  error: null
+  error: null,
+  showAll: true
 };
 
 export function reducer( state = initialState, action : alert.Actions ) : State {
-  switch( action.type ) {
+  switch ( action.type ) {
     case alert.GET: {
-      return { ...state, isFetching: true };
+      return {...state, isFetching: true};
     }
 
     case alert.GET_SUCCESS: {
-      return { ...state, isFetching: false, entities: action.payload };
+      return {...state, isFetching: false, entities: action.payload, showAll: true};
     }
 
     default: {

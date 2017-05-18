@@ -12,18 +12,22 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output
           <p class="alerts-header__large bold">PLAN EXECUTION</p>
         </div>
 
-        <div class="right">
+        <div class="right flex align-center">
+          <button class="alerts-show-more" (click)="showAll = true" [disabled]="false">Show all</button>
           <p>6 / 21</p>
         </div>
       </header>
 
 
       <section class="alerts-container flex flex-wrap" infiniteScroll
+               [ngClass]="{'alerts-container-show-all': showAll}"
                infiniteScrollContainer=".alerts-container"
                [infiniteScrollDistance]="3.5"
                (scrolled)="onScroll()">
 
-        <div class="alert flex-1" *ngFor="let alert of alerts">
+        <div *ngIf="alerts.isFetching">Loading...</div>
+
+        <div class="alert flex-1" *ngFor="let alert of alerts.entities">
           <div class="alert-container flex align-center">
             <div class="alert-icon"><img src="assets/warning.svg" alt=""></div>
             <div class="flex-1 alert-content-container">
@@ -42,7 +46,7 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output
     </section>
 
   `,
-  styles: [`
+  styles: [ `
     .alerts {
       border: 1px solid lightgray;
       padding: 1em;
@@ -52,6 +56,10 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output
 
     .alerts-container {
       height: 142px;
+      overflow: hidden;
+    }
+
+    .alerts-container.alerts-container-show-all {
       overflow-y: scroll;
     }
 
@@ -95,18 +103,18 @@ import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output
     .alert-content {
       font-size: 0.7rem;
     }
-  `],
+
+    .alerts-show-more {
+      margin-right: 1em;
+    }
+  ` ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AlertsComponent implements OnInit {
-  @Input() alerts = [];
+export class AlertsComponent {
+  @Input() alerts;
   @Output() more = new EventEmitter<boolean>();
+  showAll : boolean = false;
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
 
   onScroll() {
     console.log('fetch more');

@@ -24,7 +24,7 @@ import { AlertsService } from '../services/alerts.service';
       <section class="right flex-1">
 
         <section>
-          <intel-alerts [alerts]="(alerts$ | async)?.entities" (more)="getAlerts($event)"></intel-alerts>
+          <intel-alerts [alerts]="alerts$ | async" (more)="getAlerts($event)"></intel-alerts>
         </section>
 
         <section>
